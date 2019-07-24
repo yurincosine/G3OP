@@ -1,3 +1,4 @@
 # GROUP-3 OPEN PLATFORM
 Collaborative work solution
-<a href="http://www.w3school.com.cn">W3School</a>
+<br/>
+<a href="https://yurincosine.github.io/G3OP/obtainuid">提取uid</a>
