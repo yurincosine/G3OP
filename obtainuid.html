@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ObtainUid</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style type="text/css">
+       *{margin: 0px;padding: 0px}
+       body{background:left top, -webkit-linear-gradient(0deg,#2486b9, #b0d5df);}
+       .option{width: 40%;margin: 0 auto;text-align: center;}
+       .inputarea{margin-top: 150px;padding: 10px 10px;box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);border-radius: 5px;}
+       .outputarea{padding: 10px 10px;margin-bottom: 100px;box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);border-radius: 5px;}
+       .btn{
+          border: none;color: white;margin:20px 0px;padding: 10px 15px;text-align: center;text-decoration: none;
+          font-size: 16px;border-radius: 30px;cursor: pointer;font-family: 'Noto Serif SC', serif;
+          }
+       .runbtn{
+        background-color: #2486b9;border: none;color: white;text-align: center;text-decoration: none;
+        border-radius: 30px;cursor: pointer;
+        }
+
+         .formatebtn{
+          background-color: #22a2c3;border: none;color: white;text-align: center;text-decoration: none;
+          border-radius: 30px;cursor: pointer;
+          }
+
+        .cleanaerabtn{
+        background-color: #ed556a;border: none;color: white;text-align: center;
+        text-decoration: none;border-radius: 30px;cursor: pointer;
+        }
+        .info{background-color: rgb(63, 63, 61);text-align: left;color: lemonchiffon;}
+       
+       .twsz{float:left;margin:5px;width:105px;height:25px;overflow: hidden;font-family: 'Noto Serif SC', serif;font-size: 25px;line-height: 25px;font-family: 'ZCOOL XiaoWei', serif;border: 1px solid;color: #66a9c9;}
+       .twsz:hover {color: rgb(212, 255, 255);padding:0px 30px 30px;transition-duration: 700ms;}
+       .btn:hover {box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.24);}
+       
+    </style>
+
+    <script>
+     
+     
+      function obtainuid(){
+        var xhrdata = document.getElementById("xhrdatainput").value;
+        var arr = xhrdata.split("\"");
+        var arr2 = [];
+        var re=0; 
+      
+        var reg=/[a-z]/g;
+        var reg2 = /,[0-9]/g;
+        var reg3 = /[0-9],/g;
+        
+        for(var s=0; s<arr.length;s++){ 
+          if(reg.test(arr[s])||reg2.test(arr[s])||reg3.test(arr[s])){
+            arr.splice(s,1);
+            s--;
+          }
+        }
+      
+        for(var i=0;i<arr.length;i+=2){
+         arr2 = arr2.concat(arr[i]);  
+        } 
+
+       for(var n=0;n<arr2.length;n++){ 
+          for(m=n+1;m<arr2.length;m++){
+
+             if(arr2[n] == arr2[m]){
+
+              arr2.splice(m,1);
+              console.log(arr2[n]);
+              m--;
+              re++;
+            }
+          }    
+        }
+
+       arr2.splice(-1,2);
+       document.getElementById("xhrdataoutput").value = arr2;
+       alert("你一共输入了" + (arr2.length) + "个UID,其中包含重复UID "+ re +" 个，删除重复项后剩余"+(arr2.length-re)+"个，请核对数量。");
+      }
+      
+     function ClearTextArea(){
+		    document.getElementById("xhrdatainput").value = "";
+		  } 
+   
+     function formateuid(){
+      var xhrdata = document.getElementById("xhrdatainput").value;
+        var arr = xhrdata.split(" ");
+        var data = [];
+        var re=0; 
+        var l = arr.length;
+      
+       //for(var i=0;i<l;i++){
+        // data = data + arr[i]+",";  
+       // } 
+      
+       //var data2= data.split(",");
+      
+       for(var s =0;s<arr.length;s++){
+          if(arr[s] ==" "){
+            arr.splice(s,1);
+          }
+         //data2=data2.splice(s,1);
+        }
+
+       for(var n=0;n<arr.length;n++){ 
+          for(m=n+1;m<arr.length;m++){
+
+             if(arr[n] == arr[m]){
+
+              arr.splice(m,1);
+              m--;
+              re++;
+            }
+          }    
+        }
+
+       //arr.splice(-1,2);
+       document.getElementById("xhrdataoutput").value = arr;
+       alert("你一共输入了" + (arr.length+re) + "个UID,其中包含重复UID "+ re +" 个，删除重复项后剩余"+(arr.length)+"个，请核对数量。");
+     } 
+
+   </script>
+
+ </head>
+
+
+ <body>
+    
+ <div class="twsz">图文三组<p style="font-size: 16px; text-decoration: underline;text-decoration: overline; color: #f8ebe6">&nbsp;Alpha2.2&nbsp;</p>
+ </div>
+
+ <div class="option" >
+    <textarea class="inputarea" id="xhrdatainput" style="background-color: #fffef9; height:300px;width:100%; resize: none;overflow: auto" placeholder="粘贴原XHR数据"></textarea>   
+   
+
+    <button class="btn runbtn" onclick="obtainuid()"title="短评、用户信息均支持">提取XHR中的UID</button>
+    <button class="btn formatebtn" onclick="formateuid()"title="把自己保存的用单个空格分开的uid组合起来便于检索">整理UID(试验)</button>
+    <button class="btn cleanaerabtn" type="reset"  onclick="ClearTextArea()"title="清空以重新输入">清空</button>
+       
+    <textarea  class="outputarea" id="xhrdataoutput"style="background-color: #fffef9; height:200px;width:100%; resize: none;overflow: auto"placeholder="输出区域"></textarea>
+    
+  </div>
+ 
+ </body>
+
+</html>
